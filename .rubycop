@@ -1,0 +1,5 @@
+--rails
+--lint
+--parallel
+--auto-correct
+-c ./rubocop.yml

@@ -1,0 +1,192 @@
+require: rubocop-rspec
+
+AllCops:
+  Exclude:
+    - db/seeds.rb
+    - bin/*
+    - vendor/**/*
+
+Metrics/LineLength:
+  Max: 100
+
+Style/MultilineBlockChain:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: true
+  Exclude:
+    - lib/tasks/**/*
+    - app/lib/pipelines/*
+    - app/graphql/**/*
+    - spec/**/*
+
+Metrics/MethodLength:
+  Max: 20
+  Exclude:
+    - db/migrate/*
+    - app/graphql/**/*
+
+Metrics/ClassLength:
+  Exclude:
+    - db/migrate/*
+    - app/graphql/types/*
+
+Metrics/AbcSize:
+  Max: 20
+  Exclude:
+    - db/migrate/*
+    - app/graphql/**/*
+
+Metrics/ParameterLists:
+  Exclude:
+    - app/graphql/mutations/*
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/Documentation:
+  Exclude:
+    - db/migrate/*
+    - spec/**/*
+    - app/graphql/**/*
+    - app/lib/orm/**/*
+
+Style/GuardClause:
+  Enabled: false
+
+Style/Lambda:
+  Exclude:
+    - app/graphql/**/*
+
+Style/AsciiComments:
+  # ¯\_(ツ)_/¯
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - app/graphql/**/*
+
+Layout/EmptyLineAfterMagicComment:
+  Exclude:
+    - app/models/**/*
+    - app/lib/orm/**/*
+    - spec/factories/**/*
+    - spec/orm/**/*
+
+Layout/EmptyLinesAroundArguments:
+  Enabled: false
+
+
+RSpec/NestedGroups:
+  Max: 5
+
+RSpec/ExampleLength:
+  Max: 7
+
+RSpec/DescribeClass:
+  Exclude:
+    - spec/graphql/mutations/**/*
+    - spec/graphql/queries/**/*
+    - spec/pg/**/*
+
+
+# The following cops are added between 0.52.1 and 0.58.0.
+# The configurations are default.
+# If you want to use a cop by default, remove a configuration for the cop from here.
+# If you want to disable a cop, change `Enabled` to false.
+
+# Supports --auto-correct
+Layout/EmptyComment:
+  Description: Checks empty comment.
+  Enabled: true
+  AllowBorderComment: true
+  AllowMarginComment: true
+
+# Supports --auto-correct
+Lint/BigDecimalNew:
+  Description: "`BigDecimal.new()` is deprecated. Use `BigDecimal()` instead."
+  Enabled: true
+
+Lint/NumberConversion:
+  Description: Checks unsafe usage of number conversion methods.
+  Enabled: false
+
+# Supports --auto-correct
+Lint/OrderedMagicComments:
+  Description: Checks the proper ordering of magic comments and whether a magic comment
+    is not placed before a shebang.
+  Enabled: true
+
+# Supports --auto-correct
+Lint/UnneededCopEnableDirective:
+  Description: Checks for rubocop:enable comments that can be removed.
+  Enabled: true
+
+# Enabled by default
+Naming/MemoizedInstanceVariableName:
+  Description: Memoized method name should match memo instance variable name.
+  Enabled: false
+  EnforcedStyleForLeadingUnderscores: disallowed
+  SupportedStylesForLeadingUnderscores:
+  - disallowed
+  - required
+  - optional
+
+Naming/UncommunicativeBlockParamName:
+  Description: Checks for block parameter names that contain capital letters, end in
+    numbers, or do not meet a minimal length.
+  Enabled: true
+  MinNameLength: 1
+  AllowNamesEndingInNumbers: true
+  AllowedNames: []
+  ForbiddenNames: []
+
+Naming/UncommunicativeMethodParamName:
+  Description: Checks for method parameter names that contain capital letters, end in
+    numbers, or do not meet a minimal length.
+  Enabled: true
+  MinNameLength: 3
+  AllowNamesEndingInNumbers: true
+  AllowedNames:
+  - io
+  - id
+  - to
+  - by
+  - 'on'
+  - in
+  - at
+  ForbiddenNames: []
+
+# Supports --auto-correct
+Rails/ActiveRecordAliases:
+  Description: 'Avoid Active Record aliases: Use `update` instead of `update_attributes`.
+    Use `update!` instead of `update_attributes!`.'
+  Enabled: true
+
+Security/Open:
+  Description: The use of Kernel#open represents a serious security risk.
+  Enabled: true
+
+# Supports --auto-correct
+Style/ExpandPathArguments:
+  Description: Use `expand_path(__dir__)` instead of `expand_path('..', __FILE__)`.
+  Enabled: true
+
+# Supports --auto-correct
+Style/TrailingBodyOnClass:
+  Description: Class body goes below class statement.
+  Enabled: true
+
+# Supports --auto-correct
+Style/TrailingBodyOnModule:
+  Description: Module body goes below module statement.
+  Enabled: true
+
+# Supports --auto-correct
+Style/UnpackFirst:
+  Description: Checks for accessing the first element of `String#unpack` instead of
+    using `unpack1`
+  Enabled: true
