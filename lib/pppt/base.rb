@@ -18,16 +18,20 @@ module PPPT
       def model
         @model ||= superclass.model
       end
+
+      def validate_keys!(keys)
+        keys.each do |key|
+          unless model.columns.include?(key)
+            raise InvalidKeyError, "The key \"#{key}\" is not allowed on #{model.name}"
+          end
+        end
+      end
     end
     # rubocop:enable Style/Documentation
 
     module InstanceMethods # rubocop:disable Style/Documentation
       def ensure_valid_keys!(keys)
-        keys.each do |key|
-          unless allowed_keys.include?(key)
-            raise InvalidKeyError, "The key \"#{key}\" is not allowed on #{model.name}"
-          end
-        end
+        self.class.validate_keys!(keys)
       end
 
       def model

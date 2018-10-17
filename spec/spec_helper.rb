@@ -28,12 +28,23 @@ DB.execute <<~SQL
     foo VARCHAR,
     PRIMARY KEY (a, b)
   );
+
+  DROP TABLE IF EXISTS with_unique_constraint;
+  CREATE TABLE with_unique_constraint (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL,
+    a INTEGER NOT NULL,
+    b INTEGER NOT NULL,
+    UNIQUE(a, b)
+  );
 SQL
 
 Sequel::Model.plugin :defaults_setter
 
+# Preload all the models we use for our test cases
 require_relative './models/simple'
 require_relative './models/composite'
+require_relative './models/unique_constraint'
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|

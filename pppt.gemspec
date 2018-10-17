@@ -2,7 +2,7 @@
 
 SEQUEL_GEMSPEC = Gem::Specification.new do |s|
   s.name = 'pppt'
-  s.version = '0.1.0'
+  s.version = '0.2.0'
   s.platform = Gem::Platform::RUBY
   s.summary = 'Pretty Please Perform This'
   s.description = 'Easily generatable service objects with Sequel models and Dry::Monads'
