@@ -9,17 +9,17 @@ module PPPT
     include Dry::Monads::Result::Mixin
     include Dry::Monads::Try::Mixin
 
-    # rubocop:disable Style/Documentation, Style/ClassVars
+    # rubocop:disable Style/Documentation
     module ClassMethods
       def model=(mod)
-        @@model = mod
+        @model = mod
       end
 
       def model
-        @@model
+        @model ||= superclass.model
       end
     end
-    # rubocop:enable Style/Documentation, Style/ClassVars
+    # rubocop:enable Style/Documentation
 
     module InstanceMethods # rubocop:disable Style/Documentation
       def ensure_valid_keys!(keys)
