@@ -1,6 +1,9 @@
 # Changelog
 
-## 0.20
+## 0.2.1
+- Fix: When default values are procs, `.call` them
+
+## 0.2.0
 - Adds `Simple::Plural::Upsert`
 
 ## 0.1.0

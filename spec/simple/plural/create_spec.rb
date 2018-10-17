@@ -21,23 +21,31 @@ describe PPPT::Simple::Plural::Create do
   end
 
   describe 'key consistency' do
+    let(:time) { Time.now }
+
     before do
       allow(Simple).to(receive(:dataset).and_return(dataset))
       allow(dataset).to(receive(:multi_insert)).and_return([])
+      allow(dataset).to(receive(:current_datetime)).and_return(time)
     end
 
     it 'includes default values' do
       service.new.call([name: 'foo'])
-      expect(dataset).to(have_received(:multi_insert).with([{ name: 'foo', labor_hours: 0 }]))
+      expect(dataset).to(
+        have_received(:multi_insert).with(
+          [{ name: 'foo', labor_hours: 0, created_at: time }]
+        )
+      )
     end
 
     it 'sets nil when there are key discrepancies and no default values' do
       service.new.call([{ name: 'foo', foo: 'bla' }, { name: 'bar' }])
       expect(dataset).to(
-        have_received(:multi_insert).with([
-                                            { name: 'foo', labor_hours: 0, foo: 'bla' },
-                                            { name: 'bar', labor_hours: 0, foo: nil },
-                                          ])
+        have_received(:multi_insert)
+          .with([
+                  { name: 'foo', labor_hours: 0, foo: 'bla', created_at: time },
+                  { name: 'bar', labor_hours: 0, foo: nil, created_at: time },
+                ])
       )
     end
   end

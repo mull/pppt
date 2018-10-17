@@ -42,7 +42,7 @@ module PPPT
             all_keys
             .zip([nil])
             .to_h
-            .merge(model.default_values)
+            .merge(self.class.evaluate_default_values)
 
           array_of_params.map do |params|
             consistent_keys.merge(params)

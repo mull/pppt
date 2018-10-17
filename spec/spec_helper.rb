@@ -16,7 +16,8 @@ DB.execute <<~SQL
     id SERIAL PRIMARY KEY,
     name VARCHAR NOT NULL,
     labor_hours INTEGER NOT NULL DEFAULT 0,
-    foo VARCHAR
+    foo VARCHAR,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
   );
 
   DROP TABLE IF EXISTS composite_pks;

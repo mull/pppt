@@ -26,6 +26,17 @@ module PPPT
           end
         end
       end
+
+      def evaluate_default_values
+        model.default_values.each_with_object({}) do |(key, val), acc|
+          acc[key] =
+            if val.is_a?(Proc)
+              val.call
+            else
+              val
+            end
+        end
+      end
     end
     # rubocop:enable Style/Documentation
 
