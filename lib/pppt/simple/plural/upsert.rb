@@ -87,6 +87,8 @@ module PPPT
         end
 
         def call(array_of_params)
+          return Success([]) if array_of_params.empty?
+
           all_keys = array_of_params.flat_map(&:keys).uniq
           ensure_valid_keys!(all_keys)
 

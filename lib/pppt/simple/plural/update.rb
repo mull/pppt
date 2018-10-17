@@ -25,6 +25,8 @@ module PPPT
         include BaseUpdate
 
         def call(array_of_array_of_model_and_params)
+          return Success([]) if array_of_params.empty?
+
           all_keys = array_of_array_of_model_and_params.flat_map { |arr| arr.last.keys }.uniq
           ensure_valid_keys!(all_keys)
           ensure_no_restricted_keys!(all_keys)

@@ -1,7 +1,10 @@
 # Changelog
 
+## 0.3.0
+- Breaking: When plural `Create|Delete|Update|Upsert#call` receives an empty array, return Success without trying anything else
+
 ## 0.2.1
-- Fix: When default values are procs, `.call` them
+- Fix: When default values are procs, call them
 
 ## 0.2.0
 - Adds `Simple::Plural::Upsert`
