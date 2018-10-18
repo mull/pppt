@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.0
+- Breaking: Single::Update now returns a Success monad, not a Try::Value
+
 ## 0.3.0
 - Breaking: When plural `Create|Delete|Update|Upsert#call` receives an empty array, return Success without trying anything else
 

@@ -29,7 +29,7 @@ module PPPT
           ensure_no_restricted_keys!(params.keys)
           Try[Sequel::Error] do
             model.update(params)
-          end
+          end.to_result
         end
       end
     end
