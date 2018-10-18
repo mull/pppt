@@ -121,6 +121,18 @@ UpsertService.new.call([{name: 'foo', a: 1}]) # => Success([])
 # INSERT INTO "model_with_constraint" ("name", "a") VALUES ('foo', 1) ON CONFLICT ON CONSTRAINT "unique_constraint_on_column_a" DO NOTHING RETURNING *
 ```
 
+Additionally we can explicitly say that the service is doing nothing:
+
+```ruby
+class UpsertService < PPPT::Simple::Plural::Upsert(ModelWithConstraint)
+  constraint :unique_constraint_on_column_a
+  do_nothing
+end
+UpsertService.new.call([{name: 'foo', a: 1}]) # => Success([])
+
+# INSERT INTO "model_with_constraint" ("name", "a") VALUES ('foo', 1) ON CONFLICT ON CONSTRAINT "unique_constraint_on_column_a" DO NOTHING RETURNING *
+```
+
 If we specify the keys we want to update, we'll get that effect:
 
 ```ruby

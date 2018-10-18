@@ -82,6 +82,11 @@ module PPPT
           @opts = (@opts || {}).merge(constraint: constraint)
         end
 
+        # no-op
+        # we can explicitly say that it does nothing, even though
+        # this is the default behaviour.
+        def self.do_nothing; end
+
         def self.options
           @opts ||= {}
         end

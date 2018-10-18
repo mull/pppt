@@ -19,13 +19,25 @@ describe PPPT::Simple::Plural::Upsert do
 
     before { model_params.each { |p| service.model.create(p) } }
 
-    context 'when doing nothing' do
-      class WithConstraintDoNothing < PPPT::Simple::Plural::Upsert(UniqueConstraint)
+    context 'when doing nothing implicitly' do
+      class WithConstraintImplicitDoNothing < PPPT::Simple::Plural::Upsert(UniqueConstraint)
         constraint :with_unique_constraint_a_b_key
       end
 
       let(:params) { model_params }
-      let(:service) { WithConstraintDoNothing }
+      let(:service) { WithConstraintImplicitDoNothing }
+
+      it_behaves_like 'a successful call'
+    end
+
+    context 'when doing nothing explicitly' do
+      class WithConstraintExplicitDoNothing < PPPT::Simple::Plural::Upsert(UniqueConstraint)
+        constraint :with_unique_constraint_a_b_key
+        do_nothing
+      end
+
+      let(:params) { model_params }
+      let(:service) { WithConstraintExplicitDoNothing }
 
       it_behaves_like 'a successful call'
     end

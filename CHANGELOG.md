@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.1
+- Adds `do_nothing` configuration for Simple::Plural::Upsert
+
 ## 0.4.0
 - Breaking: Single::Update now returns a Success monad, not a Try::Value
 
