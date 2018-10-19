@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.2
+- Fix undefined variable `array_of_params` error in `simple|plural|update`
+
 ## 0.4.1
 - Add `do_nothing` configuration for Simple::Plural::Upsert
 

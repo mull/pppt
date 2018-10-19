@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pppt (0.4.1)
+    pppt (0.4.2)
       dry-monads (~> 1.0)
       sequel (~> 5)
 
@@ -15,7 +15,7 @@ GEM
     dry-core (0.4.7)
       concurrent-ruby (~> 1.0)
     dry-equalizer (0.2.1)
-    dry-monads (1.0.1)
+    dry-monads (1.1.0)
       concurrent-ruby (~> 1.0)
       dry-core (~> 0.4, >= 0.4.4)
       dry-equalizer
@@ -69,4 +69,4 @@ DEPENDENCIES
   rubocop-rspec (~> 1.27)
 
 BUNDLED WITH
-   1.16.2
+   1.16.3
