@@ -29,13 +29,18 @@ Update is very simple: given an instance and some params, update it.
 
 ```ruby
 class SimpleSingularUpdate < PPPT::Simple::Single::Update(SomeModel); end
-SimpleSingularUpdate.new.call(SomeModel.first, name: 'bar') #=> Success(SomeModel#<id: 1, name: 'bar'>)
+SimpleSingularUpdate.new.call(SomeModel.first, name: 'bar') # => Success(SomeModel#<id: 1, name: 'bar'>)
 ```
 
 However, update also guards against updating the primary key and raises an error you try:
 
 ```ruby
-SimpleSingularUpdate.new.call(SomeModel.first, id: 2) #=> raises PPPT::InvalidKeyError<"The primary key (id) cannot be updated on SimpleModel">
+SimpleSingularUpdate.new.call(SomeModel.first, id: 2) # => raises PPPT::InvalidKeyError<"The primary key (id) cannot be updated on SimpleModel">
+```
+
+In case the params match the current values and no update is performed the same instance of the model is returned:
+```ruby
+SimpleSingularUpdate.new.call(SomeModel.first, name: 'foo') # => Success(SomeModel#<id: 1, name: 'foo')
 ```
 
 ### Delete
@@ -43,7 +48,7 @@ Delete resolves to nil upon successs, rather than returning a deleted model.
 
 ```ruby
 class SimpleSingularDelete < PPPT::Simple::Single::Delete(SomeModel); end
-SimpleSingularDelete.new.call(SomeModel.first) #=> Success(nil)
+SimpleSingularDelete.new.call(SomeModel.first) # => Success(nil)
 ```
 
 ## Plural
