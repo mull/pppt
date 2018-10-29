@@ -4,7 +4,7 @@ require 'sequel'
 require 'logger'
 require 'pry'
 
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 require 'pppt'
 
 DB = Sequel.connect(database: 'pppt-test', adapter: :postgres)

@@ -5,40 +5,6 @@ require_relative '../../base'
 module PPPT
   module Simple
     module Plural
-      class BehaviourValidator
-        def initialize(klass)
-          @klass = klass
-          @opts = {}
-        end
-
-        def nothing
-          @behavior = :do_nothing
-        end
-
-        def update(*keys)
-          @behavior = :update
-          @behavior_args = keys
-
-          @opts[:update] = keys.each_with_object({}) do |key, acc|
-            acc[key] = Sequel[:excluded][key]
-          end
-
-          klass.verify_key_validity!(keys)
-        end
-
-        def target(target)
-          @opts[:target] = target
-        end
-
-        def params
-          @opts
-        end
-
-        private
-
-        attr_reader :klass
-      end
-
       # Upsert multiple simple records.
       # This class requires a constraint name to be provided that can be used
       # for Postgres' native upserting capabilities (ON CONFLICT)
