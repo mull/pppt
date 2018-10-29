@@ -9,7 +9,7 @@ describe PPPT::Simple::Plural::Create do
   end
 
   it 'is successful' do
-    expect(service.new.call([name: 'foo'])).to be_success
+    expect(service.new.call([name: 'foo'])).to be_a_successful_result
   end
 
   it 'returns instances of its model' do

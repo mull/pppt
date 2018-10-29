@@ -5,7 +5,7 @@ describe PPPT::Simple::Plural::Update do
   let(:instance) { Composite.create(a: 1, b: 2, name: 'foo') }
 
   it 'is successful' do
-    expect(service.new.call([[instance, name: 'bar']])).to be_success
+    expect(service.new.call([[instance, name: 'bar']])).to be_a_successful_result
   end
 
   it 'returns instances of its model' do

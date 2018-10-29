@@ -42,6 +42,8 @@ SQL
 
 Sequel::Model.plugin :defaults_setter
 
+require_relative './support/monadic_matchers'
+
 # Preload all the models we use for our test cases
 require_relative './models/simple'
 require_relative './models/composite'

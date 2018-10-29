@@ -6,7 +6,7 @@ describe PPPT::Simple::Plural::Upsert do
 
   shared_examples_for 'a successful call' do
     it 'is successful' do
-      expect(result).to be_success
+      expect(result).to be_a_successful_result
     end
 
     it do

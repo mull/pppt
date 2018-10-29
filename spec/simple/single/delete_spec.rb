@@ -9,7 +9,7 @@ describe PPPT::Simple::Single::Delete do
   let(:instance) { Composite.create(a: 1, b: 1, name: 'foo') }
 
   it 'is successful' do
-    expect(service.new.call(instance)).to be_success
+    expect(service.new.call(instance)).to be_a_successful_result
   end
 
   it 'resolves to nil' do
