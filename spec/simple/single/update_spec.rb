@@ -6,7 +6,7 @@ describe PPPT::Simple::Single::Update do
   let(:params) { { name: 'bar' } }
 
   it 'is successful' do
-    expect(service.new.call(instance, params)).to be_success
+    expect(service.new.call(instance, params)).to be_a_successful_result
   end
 
   it 'returns the updated model' do

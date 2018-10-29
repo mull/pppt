@@ -5,7 +5,7 @@ describe PPPT::Simple::Single::Create do
   let(:params) { { a: 1, b: 1, name: 'foo' } }
 
   it 'is successful' do
-    expect(service.new.call(params)).to be_success
+    expect(service.new.call(params)).to be_a_successful_result
   end
 
   it 'returns an instance of its model' do

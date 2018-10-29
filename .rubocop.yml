@@ -1,45 +1,21 @@
 require: rubocop-rspec
 
-AllCops:
-  Exclude:
-    - db/seeds.rb
-    - bin/*
-    - vendor/**/*
-
 Metrics/LineLength:
   Max: 100
 
 Style/MultilineBlockChain:
   Enabled: false
 
+Metrics/AbcSize:
+  Max: 20
+
+Metrics/MethodLength:
+  Enabled: false
+
 Metrics/BlockLength:
   Enabled: true
   Exclude:
-    - lib/tasks/**/*
-    - app/lib/pipelines/*
-    - app/graphql/**/*
     - spec/**/*
-
-Metrics/MethodLength:
-  Max: 20
-  Exclude:
-    - db/migrate/*
-    - app/graphql/**/*
-
-Metrics/ClassLength:
-  Exclude:
-    - db/migrate/*
-    - app/graphql/types/*
-
-Metrics/AbcSize:
-  Max: 20
-  Exclude:
-    - db/migrate/*
-    - app/graphql/**/*
-
-Metrics/ParameterLists:
-  Exclude:
-    - app/graphql/mutations/*
 
 Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: consistent_comma
@@ -47,51 +23,25 @@ Style/TrailingCommaInArrayLiteral:
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: consistent_comma
 
-Style/Documentation:
-  Exclude:
-    - db/migrate/*
-    - spec/**/*
-    - app/graphql/**/*
-    - app/lib/orm/**/*
-
 Style/GuardClause:
   Enabled: false
-
-Style/Lambda:
-  Exclude:
-    - app/graphql/**/*
 
 Style/AsciiComments:
   # ¯\_(ツ)_/¯
   Enabled: false
 
-Style/ClassAndModuleChildren:
-  Exclude:
-    - app/graphql/**/*
-
-Layout/EmptyLineAfterMagicComment:
-  Exclude:
-    - app/models/**/*
-    - app/lib/orm/**/*
-    - spec/factories/**/*
-    - spec/orm/**/*
-
 Layout/EmptyLinesAroundArguments:
   Enabled: false
-
 
 RSpec/NestedGroups:
   Max: 5
 
 RSpec/ExampleLength:
-  Max: 7
+  Max: 8
 
-RSpec/DescribeClass:
-  Exclude:
-    - spec/graphql/mutations/**/*
-    - spec/graphql/queries/**/*
-    - spec/pg/**/*
 
+RSpec/FilePath:
+  Enabled: false
 
 # The following cops are added between 0.52.1 and 0.58.0.
 # The configurations are default.

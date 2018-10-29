@@ -3,7 +3,7 @@
 describe PPPT::Simple::Single::Delete do
   shared_examples_for 'plural deletion' do
     it 'is successful' do
-      expect(service.new.call(instances)).to be_success
+      expect(service.new.call(instances)).to be_a_successful_result
     end
 
     it 'resolves to the number of rows deleted' do

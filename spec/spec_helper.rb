@@ -4,7 +4,7 @@ require 'sequel'
 require 'logger'
 require 'pry'
 
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 require 'pppt'
 
 DB = Sequel.connect(database: 'pppt-test', adapter: :postgres)
@@ -41,6 +41,8 @@ DB.execute <<~SQL
 SQL
 
 Sequel::Model.plugin :defaults_setter
+
+require_relative './support/monadic_matchers'
 
 # Preload all the models we use for our test cases
 require_relative './models/simple'
