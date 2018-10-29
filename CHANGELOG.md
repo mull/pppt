@@ -1,10 +1,14 @@
 # Changelog
 
+## 0.4.3
+- Fix: broken plural delete
+- Add: Continuous testing
+
 ## 0.4.2
-- Fix undefined variable `array_of_params` error in `simple|plural|update`
+- Fix: undefined variable `array_of_params` error in `simple|plural|update`
 
 ## 0.4.1
-- Add `do_nothing` configuration for Simple::Plural::Upsert
+- Add: `do_nothing` configuration for Simple::Plural::Upsert
 
 ## 0.4.0
 - Breaking: Single::Update now returns a Success monad, not a Try::Value
@@ -16,7 +20,7 @@
 - Fix: When default values are procs, call them
 
 ## 0.2.0
-- Add `Simple::Plural::Upsert`
+- Add: `Simple::Plural::Upsert`
 
 ## 0.1.0
 Initial launch with the services.

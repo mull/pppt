@@ -2,7 +2,7 @@
 
 SEQUEL_GEMSPEC = Gem::Specification.new do |s|
   s.name = 'pppt'
-  s.version = '0.4.2'
+  s.version = '0.4.3'
   s.platform = Gem::Platform::RUBY
   s.summary = 'Pretty Please Perform This'
   s.description = 'Easily generatable service objects with Sequel models and Dry::Monads'
@@ -24,6 +24,7 @@ SEQUEL_GEMSPEC = Gem::Specification.new do |s|
   s.add_development_dependency 'pg', '~> 1.1'
   s.add_development_dependency 'pry', '~> 0.11.3'
   s.add_development_dependency 'rspec', '~> 3.8'
+  s.add_development_dependency 'rspec_junit_formatter'
   s.add_development_dependency 'rubocop', '~> 0.58'
   s.add_development_dependency 'rubocop-rspec', '~> 1.27'
 end
