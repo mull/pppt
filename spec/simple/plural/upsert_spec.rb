@@ -15,7 +15,7 @@ describe PPPT::Simple::Plural::Upsert do
   end
 
   context 'when given constraint' do
-    let(:model_params) { [{ name: 'bar', a: 1, b: 1 }, { name: 'foo', a: 2, b: 2}] }
+    let(:model_params) { [{ name: 'bar', a: 1, b: 1 }, { name: 'foo', a: 2, b: 2 }] }
 
     before { model_params.each { |p| service.model.create(p) } }
 
