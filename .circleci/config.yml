@@ -3,6 +3,11 @@
 # Check https://circleci.com/docs/2.0/language-ruby/ for more details
 #
 version: 2
+
+references:
+  bundle_path: &bundle_path
+    /home/circleci/pppt/vendor/bundle
+
 jobs:
   build:
     docker:
@@ -11,6 +16,7 @@ jobs:
         environment:
           PGHOST: 127.0.0.1
           PGUSER: pppt
+          BUNDLE_PATH: *bundle_path
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -30,17 +36,15 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "Gemfile.lock" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
 
       - run:
           name: install dependencies
           command: |
-            bundle install --jobs=4 --retry=3 --path vendor/bundle
+            bundle install --jobs=4 --retry=3
 
       - save_cache:
           paths:
-            - ./vendor/bundle
+            - *bundle_path
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
       - run:
