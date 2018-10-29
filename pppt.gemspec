@@ -24,6 +24,7 @@ SEQUEL_GEMSPEC = Gem::Specification.new do |s|
   s.add_development_dependency 'pg', '~> 1.1'
   s.add_development_dependency 'pry', '~> 0.11.3'
   s.add_development_dependency 'rspec', '~> 3.8'
+  s.add_development_dependency 'rspec_junit_formatter'
   s.add_development_dependency 'rubocop', '~> 0.58'
   s.add_development_dependency 'rubocop-rspec', '~> 1.27'
 end
