@@ -19,7 +19,7 @@ module PPPT
         include Base
 
         def call(array_of_models)
-          return Success(0) if array_of_params.empty?
+          return Success(0) if array_of_models.empty?
 
           primary_keys = array_of_models.map(&:pk)
 
