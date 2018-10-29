@@ -8,8 +8,8 @@ RSpec::Matchers.define :be_a_successful_result do
   end
 end
 
-RSpec::Matchers.define :be_a_failed_result do |expected|
+RSpec::Matchers.define :be_a_failed_result do
   match do |actual|
-    actual % expected == 0
+    actual.is_a?(Dry::Monads::Failure)
   end
 end
