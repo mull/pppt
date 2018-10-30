@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.4
+- Fix: Single::Update returning unexpected Success(nil) instead of model when no db update occured
+
 ## 0.4.3
 - Fix: broken plural delete
 - Add: Continuous testing
