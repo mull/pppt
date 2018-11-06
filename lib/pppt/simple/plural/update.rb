@@ -41,7 +41,8 @@ module PPPT
 
         def update_model(model, params)
           Try[Sequel::Error] do
-            model.update(params)
+            updated_model = model.update(params)
+            updated_model || model
           end.to_result
         end
       end

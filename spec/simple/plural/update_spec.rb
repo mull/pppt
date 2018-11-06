@@ -8,12 +8,6 @@ describe PPPT::Simple::Plural::Update do
     expect(service.new.call([[instance, name: 'bar']])).to be_a_successful_result
   end
 
-  it 'returns instances of its model' do
-    expect(service.new.call([[instance, name: 'bar']]).value!).to(
-      all(be_instance_of(service.model))
-    )
-  end
-
   it 'raises when given invalid keys' do
     expect { service.new.call([[instance, _i_do_not_exist: 1]]) }.to(
       raise_error(PPPT::InvalidKeyError)
@@ -24,5 +18,27 @@ describe PPPT::Simple::Plural::Update do
     expect { service.new.call([[instance, id: 4]]) }.to(
       raise_error(PPPT::InvalidKeyError)
     )
+  end
+
+  context 'when a db update is performed' do
+    let(:outcome) { service.new.call([[instance, name: new_name]]).value! }
+    let(:new_name) { 'bar' }
+
+    it 'returns instances of its model' do
+      expect(outcome).to(
+        all(be_instance_of(service.model))
+      )
+    end
+  end
+
+  context 'when no db update is performed' do
+    let(:outcome) { service.new.call([[instance, name: current_name]]).value! }
+    let(:current_name) { 'foo' }
+
+    it 'returns instances of its model' do
+      expect(outcome).to(
+        all(be_instance_of(service.model))
+      )
+    end
   end
 end
