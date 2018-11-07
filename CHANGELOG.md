@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.5
+- Fix: Plural::Update returning unexpected Success([nil, nil, ...]) instead of array of models when no db update occured
+
 ## 0.4.4
 - Fix: Single::Update returning unexpected Success(nil) instead of model when no db update occured
 
