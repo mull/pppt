@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.6
+- Fix: typos/wording in README
+
 ## 0.4.5
 - Fix: Plural::Update returning unexpected Success([nil, nil, ...]) instead of array of models when no db update occured
 
