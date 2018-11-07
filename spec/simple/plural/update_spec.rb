@@ -33,7 +33,7 @@ describe PPPT::Simple::Plural::Update do
 
   context 'when no db update is performed' do
     let(:outcome) { service.new.call([[instance, name: current_name]]).value! }
-    let(:current_name) { 'foo' }
+    let(:current_name) { instance.name }
 
     it 'returns instances of its model' do
       expect(outcome).to(
