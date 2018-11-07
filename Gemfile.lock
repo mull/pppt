@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pppt (0.4.5)
+    pppt (0.4.6)
       dry-monads (~> 1.0)
       sequel (~> 5)
 

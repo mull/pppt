@@ -32,7 +32,7 @@ class SimpleSingularUpdate < PPPT::Simple::Single::Update(SomeModel); end
 SimpleSingularUpdate.new.call(SomeModel.first, name: 'bar') # => Success(SomeModel#<id: 1, name: 'bar'>)
 ```
 
-However, update also guards against updating the primary key and raises an error you try:
+However, update also guards against updating the primary key and raises an error when you try:
 
 ```ruby
 SimpleSingularUpdate.new.call(SomeModel.first, id: 2) # => raises PPPT::InvalidKeyError<"The primary key (id) cannot be updated on SimpleModel">
@@ -44,7 +44,7 @@ SimpleSingularUpdate.new.call(SomeModel.first, name: 'foo') # => Success(SomeMod
 ```
 
 ### Delete
-Delete resolves to nil upon successs, rather than returning a deleted model.
+Delete resolves to nil upon success, rather than returning a deleted model.
 
 ```ruby
 class SimpleSingularDelete < PPPT::Simple::Single::Delete(SomeModel); end
@@ -57,21 +57,21 @@ Takes an array of hashes to insert. This results in only one call to Postgres (m
 
 ```ruby
 class SimplePluralCreate < PPPT::Simple::Plural::Create(SomeModel); end
-SimplePluralUpdate.new.call([{name: 'foo'}, {name: 'bar'}])
+SimplePluralCreate.new.call([{name: 'foo'}, {name: 'bar'}])
 # => Success([SimpleModel<id: 1, name: 'foo'>, SimpleModel<id: 2, name: 'bar'>])
 ```
 
 Creation is a tiny bit smart though. If you refer back to the definition of SomeModel you'll see that the column `count` is non-nullable and has a default value. PPPT will look at the hashes given to it and ensure that all inserts have the equal amount of columns. It will first attempt to find the default values of the column from the model:
 
 ```ruby
-SimplePluralUpdate.new.call({name: 'foo', count: 1}, {name: 'bar'})
+SimplePluralCreate.new.call({name: 'foo', count: 1}, {name: 'bar'})
 # => INSERT INTO some_models (name, count) VALUES ('foo', 1), ('bar', 0)
 ```
 
 If the column has no default value it will attempt to use nil:
 
 ```ruby
-SimplePluralUpdate.new.call({count: 1}, {name: 'bar'})
+SimplePluralCreate.new.call({count: 1}, {name: 'bar'})
 # => INSERT INTO some_models (name, count) VALUES (NULL, 1), ('bar', 0)
 ```
 
