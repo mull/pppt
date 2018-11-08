@@ -148,4 +148,44 @@ end
 UpsertService.new.call([{name: 'foo', a: 1}]) # => Success([])
 
 # INSERT INTO "model_with_constraint" ("name", "a") VALUES ('foo', 1) ON CONFLICT ON CONSTRAINT "unique_constraint_on_column_a" DO UPDATE SET "name" = "excluded"."name" RETURNING *
+```
+
+# One to Many
+Handle creation of parents and children.
+
+## Plural
+
+### Create
+Given services as definition time to create children for a model's association we can easily create multiple parents and children without writing glue code to fill in the foreign keys. Sequel models lets us know how to fill in the associations, yet the inserts are done in batch.
+
+
+```ruby
+class CreateChapters < PPPT::Simple::Plural::Create(Chapter); end
+
+class CreateBooksAndChapters < PPPT::OneToMany::Plural::Create(Book)
+  create_chapters CreateChapters.new
+end
+
+CreateBooksAndChapters.new.call([
+  {
+    title: 'Eloquent Ruby',
+    chapters: [
+      { title: 'Write code that looks like Ruby' },
+      { title: 'Choose the Right Control Structure' }
+    ]
+  },
+  {
+    title: 'Ruby under a microscope',
+    chapters: [
+      { title: 'Tokenization and Parsing' },
+      { title: 'Compilation' }
+    ]
+  }
+])
+
+# INSERT INTO books (title) VALUES ('Eloquent Ruby'), ('Ruby under a microscope') RETURNING *
+# INSERT INTO chapters (book_id, title) VALUES (1, 'Write code that looks like Ruby'), (1, 'Choose the Right Control Structure'), (2, 'Tokenization and Parsing'), (2, 'Compilation')
+
+# => # => Success([Book<id: 1, title: 'Eloquent Ruby'>, Book<id: 2, title: 'Ruby under a microscope'>])
+
 

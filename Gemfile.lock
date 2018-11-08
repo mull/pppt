@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pppt (0.4.6)
+    pppt (0.5.0)
       dry-monads (~> 1.0)
       sequel (~> 5)
 
@@ -72,4 +72,4 @@ DEPENDENCIES
   rubocop-rspec (~> 1.27)
 
 BUNDLED WITH
-   1.16.3
+   1.17.1

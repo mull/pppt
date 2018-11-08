@@ -38,6 +38,19 @@ DB.execute <<~SQL
     b INTEGER NOT NULL,
     UNIQUE(a, b)
   );
+
+  DROP TABLE IF EXISTS chapters;
+  DROP TABLE IF EXISTS books;
+  CREATE TABLE books (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL
+  );
+
+  CREATE TABLE chapters (
+    id SERIAL PRIMARY KEY,
+    book_id INTEGER NOT NULL REFERENCES books(id) ON DELETE CASCADE,
+    name VARCHAR NOT NULL
+  );
 SQL
 
 Sequel::Model.plugin :defaults_setter
@@ -48,6 +61,8 @@ require_relative './support/monadic_matchers'
 require_relative './models/simple'
 require_relative './models/composite'
 require_relative './models/unique_constraint'
+require_relative './models/book'
+require_relative './models/chapter'
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
