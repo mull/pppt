@@ -49,7 +49,7 @@ module PPPT
             raise ArgumentError, "#{service} cannot be used for #{method_name}!"
           end
 
-          association_name = method_name.to_s.split('_').last.to_sym
+          association_name = method_name.to_s.split('_')[1..-1].join('_').to_sym
 
           @_insert_service_cache ||= Hash[supported_associations_keys.zip([])]
           @_insert_service_cache[association_name] = service
