@@ -36,20 +36,6 @@ module PPPT
               .map { |hash| model.load(hash) }
           end.to_result
         end
-
-        private
-
-        def slice_consistent_params(array_of_params, all_keys)
-          consistent_keys =
-            all_keys
-            .zip([nil])
-            .to_h
-            .merge(self.class.evaluate_default_values)
-
-          array_of_params.map do |params|
-            consistent_keys.merge(params)
-          end
-        end
       end
     end
   end

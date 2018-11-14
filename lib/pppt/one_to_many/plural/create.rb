@@ -79,11 +79,7 @@ module PPPT
 
         def self.ensure_valid_keys!(array_of_params)
           all_keys = array_of_params.flat_map(&:keys).uniq
-          all_keys.each do |key|
-            unless valid_columns.include?(key)
-              raise InvalidKeyError, "The key \"#{key}\" is not allowed on #{model.name}"
-            end
-          end
+          validate_keys!(all_keys)
         end
 
         def self.valid_columns
@@ -93,9 +89,6 @@ module PPPT
         def call(array_of_params)
           return Success([]) if array_of_params.empty?
 
-          # all_keys = array_of_params.flat_map(&:keys).uniq
-          # ensure_valid_keys!(all_keys)
-          # inserts = slice_consistent_params(array_of_params, all_keys)
           self.class.ensure_valid_keys!(array_of_params)
           base_params = array_of_params.map { |p| slice_model_parameters(p) }
           all_keys = base_params.flat_map(&:keys).uniq
@@ -137,18 +130,6 @@ module PPPT
 
         def slice_model_parameters(params)
           params.slice(*model.columns)
-        end
-
-        def slice_consistent_params(array_of_params, all_keys)
-          consistent_keys =
-            all_keys
-            .zip([nil])
-            .to_h
-            .merge(self.class.evaluate_default_values)
-
-          array_of_params.map do |params|
-            consistent_keys.merge(params)
-          end
         end
       end
     end
