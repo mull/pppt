@@ -5,13 +5,13 @@ require_relative '../../base'
 module PPPT
   module OneToMany
     module Plural
-      # Create multiple parent records and multiple records for one or more one_to_many associations,
-      # but only when provided with services to do so.
+      # Create multiple parent records and multiple records for one or more one_to_many
+      # associations, but only when provided with services to do so.
       #
       # Services to create "child records" must be given at class definition time.
       #
-      # Child creation services must PPPT services as of now. The class will throw (at definition time)
-      # if given something else.
+      # Child creation services must be PPPT services as of now. The class will throw (at definition
+      # time) if given something else.
       #
       # Additionally we make sure that consistent keys are provided for all
       # rows to be inserted, by looking at the model and the default values.
@@ -21,7 +21,9 @@ module PPPT
       # class CreateService < PPPT::OneToMany::Plural::Create(Book);
       #   create_chapters CreateChapters.new
       # end
-      # CreateService.new.call([ { title: 'Eloquent Ruby', chapters: [title: 'Write code that looks like Ruby'] } ])
+      # CreateService.new.call([
+      #   {title: 'Eloquent Ruby', chapters: [title: 'Write code that looks like Ruby'] }
+      # ])
       # => Success([#<Book {id: 1, title: 'Eloquent Ruby', ...}>)
       #
       # Errors of base class Sequel::Error are captured and bubbled

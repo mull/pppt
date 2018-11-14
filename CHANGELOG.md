@@ -1,7 +1,7 @@
 # Changelog
 
 ## 0.5.0
-- Add OneToMany::Plural::Create
+- Add: OneToMany::Plural::Create
 
 ## 0.4.6
 - Fix: typos/wording in README
