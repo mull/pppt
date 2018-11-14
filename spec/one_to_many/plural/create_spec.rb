@@ -9,8 +9,6 @@ class CreateBooksAndChapters < PPPT::OneToMany::Plural::Create(Book)
 end
 
 describe PPPT::OneToMany::Plural::Create do
-  let(:chapter_double) { instance_double('CreateChapters', call: Success(nil)) }
-
   let(:service) { CreateBooksAndChapters.new }
   let(:params) do
     [
