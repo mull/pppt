@@ -30,6 +30,7 @@ module PPPT
       # up on failure, through the Failure result monad.
       class Create
         include Base
+        include Dry::Monads::Do.for(:create_associations)
 
         def self.respond_to_missing?(method_name)
           method_name.to_s.start_with?('create_')
@@ -77,11 +78,6 @@ module PPPT
           @_insert_service_cache[association_name]
         end
 
-        def self.ensure_valid_keys!(array_of_params)
-          all_keys = array_of_params.flat_map(&:keys).uniq
-          validate_keys!(all_keys)
-        end
-
         def self.valid_columns
           @valid_columns ||= model.columns + supported_associations_keys
         end
@@ -89,40 +85,56 @@ module PPPT
         def call(array_of_params)
           return Success([]) if array_of_params.empty?
 
-          self.class.ensure_valid_keys!(array_of_params)
-          base_params = array_of_params.map { |p| slice_model_parameters(p) }
-          all_keys = base_params.flat_map(&:keys).uniq
-          inserts = slice_consistent_params(base_params, all_keys)
+          inserts = validate_and_slice_params(array_of_params)
 
           Try[Sequel::Error] do
             # Return order is the same as given
             parents = model.dataset.returning.multi_insert(inserts)
-            association_insertions = {}
-            array_of_params.map.with_index do |item, index|
-              associations = item.slice(*self.class.supported_associations_keys)
-              parent = parents[index]
-              associations.each do |(association_name, association_params)|
-                reflection = self.class.assoc_lookup[association_name]
-
-                association_insertions[association_name] ||= []
-                association_insertions[association_name].concat(
-                  association_params.map do |ap|
-                    ap.merge(reflection[:key] => parent[reflection[:primary_key]])
-                  end
-                )
-              end
-            end
-
-            association_insertions.each do |association_name, items|
-              service = self.class.insert_service_for_association(association_name)
-              service.call(items)
-            end
+            create_associations(array_of_params, parents)
 
             parents.map { |hash| model.load(hash) }
           end.to_result
         end
 
         private
+
+        def create_associations(array_of_params, created_parents)
+          association_insertions = {}
+          array_of_params.map.with_index do |item, index|
+            # binding.pry
+            item
+              .slice(*self.class.supported_associations_keys)
+              .each do |(association_name, association_params)|
+                association_insertions[association_name] ||= []
+                association_insertions[association_name].concat(
+                  generate_association_params(
+                    created_parents[index],
+                    association_name,
+                    association_params
+                  )
+                )
+              end
+          end
+
+          association_insertions.each do |association_name, items|
+            service = self.class.insert_service_for_association(association_name)
+            yield service.call(items)
+          end
+        end
+
+        def generate_association_params(parent, association_name, association_params)
+          reflection = self.class.assoc_lookup[association_name]
+          association_params.map do |ap|
+            ap.merge(reflection[:key] => parent[reflection[:primary_key]])
+          end
+        end
+
+        def validate_and_slice_params(array_of_params)
+          self.class.validate_keys!(array_of_params.flat_map(&:keys).uniq)
+          base_params = array_of_params.map { |p| slice_model_parameters(p) }
+          all_keys = base_params.flat_map(&:keys).uniq
+          slice_consistent_params(base_params, all_keys)
+        end
 
         def add_method_for_association(association_name)
           self.class.supported_associations.find { |t| t[:name] == association_name }[:add_method]
