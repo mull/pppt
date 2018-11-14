@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 class CreateChapters < PPPT::Simple::Plural::Create(Chapter); end
+class CreateAuthors < PPPT::Simple::Plural::Create(Author); end
 
 class CreateBooksAndChapters < PPPT::OneToMany::Plural::Create(Book)
   create_chapters CreateChapters.new
+  create_authors CreateAuthors.new
 end
 
 describe PPPT::OneToMany::Plural::Create do
@@ -20,6 +22,9 @@ describe PPPT::OneToMany::Plural::Create do
           { name: 'Take Advantage of Ruby’s Smart Collections' },
           { name: 'Take Advantage of Ruby’s Smart Strings' },
         ],
+        authors: [
+          { full_name: 'Ross Olsen' },
+        ],
       },
       {
         name: 'Ruby under a microscope',
@@ -27,6 +32,9 @@ describe PPPT::OneToMany::Plural::Create do
           { name: 'Tokenization and Parsing' },
           { name: 'Compilation' },
           { name: 'How Ruby Executes Your Code' },
+        ],
+        authors: [
+          { full_name: 'Pat Shaughnessy' },
         ],
       },
     ]
@@ -50,6 +58,9 @@ describe PPPT::OneToMany::Plural::Create do
     expect(
       books.map { |b| b.chapters_dataset.count }
     ).to eq([4, 3])
+    expect(
+      books.map { |b| b.authors_dataset.count }
+    ).to eq([1, 1])
   end
 
   it 'ignores when given invalid keys' do

@@ -40,6 +40,7 @@ DB.execute <<~SQL
   );
 
   DROP TABLE IF EXISTS chapters;
+  DROP TABLE IF EXISTS authors;
   DROP TABLE IF EXISTS books;
   CREATE TABLE books (
     id SERIAL PRIMARY KEY,
@@ -48,8 +49,13 @@ DB.execute <<~SQL
 
   CREATE TABLE chapters (
     id SERIAL PRIMARY KEY,
-    book_id INTEGER NOT NULL REFERENCES books(id) ON DELETE CASCADE,
+    book_id INTEGER NOT NULL REFERENCES books(id),
     name VARCHAR NOT NULL
+  );
+
+  CREATE TABLE authors (
+    book_id INTEGER NOT NULL REFERENCES books(id),
+    full_name VARCHAR NOT NULL
   );
 SQL
 
@@ -63,6 +69,7 @@ require_relative './models/composite'
 require_relative './models/unique_constraint'
 require_relative './models/book'
 require_relative './models/chapter'
+require_relative './models/author'
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
