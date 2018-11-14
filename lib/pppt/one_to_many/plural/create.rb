@@ -95,8 +95,8 @@ module PPPT
           inserts = slice_consistent_params(base_params, all_keys)
 
           Try[Sequel::Error] do
-            parents = model.dataset.returning.multi_insert(inserts).map { |hash| model.load(hash) }
             # Return order is the same as given
+            parents = model.dataset.returning.multi_insert(inserts)
             association_insertions = {}
             array_of_params.map.with_index do |item, index|
               associations = item.slice(*self.class.supported_associations_keys)
@@ -118,7 +118,7 @@ module PPPT
               service.call(items)
             end
 
-            parents
+            parents.map { |hash| model.load(hash) }
           end.to_result
         end
 
