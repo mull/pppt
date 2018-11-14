@@ -89,10 +89,10 @@ module PPPT
 
           Try[Sequel::Error] do
             # Return order is the same as given
-            parents = model.dataset.returning.multi_insert(inserts)
+            parents = model.dataset.returning.multi_insert(inserts).map { |hash| model.load(hash) }
             create_associations(array_of_params, parents)
 
-            parents.map { |hash| model.load(hash) }
+            parents
           end.to_result
         end
 
@@ -101,7 +101,6 @@ module PPPT
         def create_associations(array_of_params, created_parents)
           association_insertions = {}
           array_of_params.map.with_index do |item, index|
-            # binding.pry
             item
               .slice(*self.class.supported_associations_keys)
               .each do |(association_name, association_params)|
@@ -124,8 +123,10 @@ module PPPT
 
         def generate_association_params(parent, association_name, association_params)
           reflection = self.class.assoc_lookup[association_name]
-          association_params.map do |ap|
-            ap.merge(reflection[:key] => parent[reflection[:primary_key]])
+          association_params.each do |ap|
+            reflection[:keys].zip(reflection[:primary_keys]).each do |(foreign_key, primary_key)|
+              ap[foreign_key] = parent.get_column_value(primary_key)
+            end
           end
         end
 

@@ -20,6 +20,7 @@ DB.execute <<~SQL
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
   );
 
+  DROP TABLE IF EXISTS composite_pk_children;
   DROP TABLE IF EXISTS composite_pks;
   CREATE TABLE composite_pks (
     a INTEGER NOT NULL,
@@ -28,6 +29,13 @@ DB.execute <<~SQL
     labor_hours INTEGER NOT NULL DEFAULT 0,
     foo VARCHAR,
     PRIMARY KEY (a, b)
+  );
+
+  CREATE TABLE composite_pk_children (
+    a INTEGER NOT NULL,
+    b INTEGER NOT NULL,
+    name VARCHAR NOT NULL,
+    FOREIGN KEY (a, b) REFERENCES composite_pks (a, b)
   );
 
   DROP TABLE IF EXISTS with_unique_constraint;
@@ -65,6 +73,7 @@ require_relative './support/monadic_matchers'
 
 # Preload all the models we use for our test cases
 require_relative './models/simple'
+require_relative './models/composite_child'
 require_relative './models/composite'
 require_relative './models/unique_constraint'
 require_relative './models/book'
