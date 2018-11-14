@@ -27,7 +27,6 @@ describe PPPT::OneToMany::Plural::Create do
   end
 
   it 'is successful' do
-    binding.pry
     expect(service.call(params)).to be_a_successful_result
   end
 
