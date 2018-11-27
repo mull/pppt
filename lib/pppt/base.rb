@@ -9,8 +9,7 @@ module PPPT
     include Dry::Monads::Result::Mixin
     include Dry::Monads::Try::Mixin
 
-    # rubocop:disable Style/Documentation
-    module ClassMethods
+    module ClassMethods # rubocop:disable Style/Documentation
       def model=(mod)
         @model = mod
       end
@@ -21,10 +20,14 @@ module PPPT
 
       def validate_keys!(keys)
         keys.each do |key|
-          unless model.columns.include?(key)
+          unless valid_columns.include?(key)
             raise InvalidKeyError, "The key \"#{key}\" is not allowed on #{model.name}"
           end
         end
+      end
+
+      def valid_columns
+        model.columns
       end
 
       def evaluate_default_values
@@ -38,7 +41,6 @@ module PPPT
         end
       end
     end
-    # rubocop:enable Style/Documentation
 
     module InstanceMethods # rubocop:disable Style/Documentation
       def ensure_valid_keys!(keys)
@@ -58,6 +60,18 @@ module PPPT
 
     def allowed_keys
       model.columns
+    end
+
+    def slice_consistent_params(array_of_params, all_keys)
+      consistent_keys =
+        all_keys
+        .zip([nil])
+        .to_h
+        .merge(self.class.evaluate_default_values)
+
+      array_of_params.map do |params|
+        consistent_keys.merge(params)
+      end
     end
   end
 end

@@ -20,6 +20,7 @@ DB.execute <<~SQL
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
   );
 
+  DROP TABLE IF EXISTS composite_pk_children;
   DROP TABLE IF EXISTS composite_pks;
   CREATE TABLE composite_pks (
     a INTEGER NOT NULL,
@@ -30,6 +31,13 @@ DB.execute <<~SQL
     PRIMARY KEY (a, b)
   );
 
+  CREATE TABLE composite_pk_children (
+    a INTEGER NOT NULL,
+    b INTEGER NOT NULL,
+    name VARCHAR NOT NULL,
+    FOREIGN KEY (a, b) REFERENCES composite_pks (a, b)
+  );
+
   DROP TABLE IF EXISTS with_unique_constraint;
   CREATE TABLE with_unique_constraint (
     id SERIAL PRIMARY KEY,
@@ -37,6 +45,25 @@ DB.execute <<~SQL
     a INTEGER NOT NULL,
     b INTEGER NOT NULL,
     UNIQUE(a, b)
+  );
+
+  DROP TABLE IF EXISTS chapters;
+  DROP TABLE IF EXISTS authors;
+  DROP TABLE IF EXISTS books;
+  CREATE TABLE books (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL
+  );
+
+  CREATE TABLE chapters (
+    id SERIAL PRIMARY KEY,
+    book_id INTEGER NOT NULL REFERENCES books(id),
+    name VARCHAR NOT NULL
+  );
+
+  CREATE TABLE authors (
+    book_id INTEGER NOT NULL REFERENCES books(id),
+    full_name VARCHAR NOT NULL
   );
 SQL
 
@@ -46,8 +73,12 @@ require_relative './support/monadic_matchers'
 
 # Preload all the models we use for our test cases
 require_relative './models/simple'
+require_relative './models/composite_child'
 require_relative './models/composite'
 require_relative './models/unique_constraint'
+require_relative './models/book'
+require_relative './models/chapter'
+require_relative './models/author'
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
