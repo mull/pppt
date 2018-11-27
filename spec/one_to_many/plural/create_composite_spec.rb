@@ -23,6 +23,14 @@ describe PPPT::OneToMany::Plural::Create do
           },
         ],
       },
+      {
+        a: 2,
+        b: 1,
+        name: 'composite 2',
+        composite_children: [
+          { name: 'child 1' }
+        ]
+      }
     ]
   end
 
@@ -43,6 +51,6 @@ describe PPPT::OneToMany::Plural::Create do
     composites = service.call(params).value!
     expect(
       composites.map { |b| b.composite_children_dataset.count }
-    ).to eq([4, 3])
+    ).to eq([2, 1])
   end
 end
